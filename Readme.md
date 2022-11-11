@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Сергей  Бочаров](https://up.htmlacademy.ru/nodejs-2/2/user/2010835).
-* Наставник: `Неизвестно`.
+* Наставник: [Олег Зубов](https://htmlacademy.ru/profile/id42701).
 
 ---
 
