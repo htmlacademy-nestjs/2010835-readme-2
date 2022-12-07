@@ -6,8 +6,6 @@ import { getMongoConnectionString } from "@readme/core";
 export function getMongoDbConfig() : MongooseModuleAsyncOptions{
   return {
     useFactory: async (configService: ConfigService) => {
-      console.log(configService.get<string>('database.port'));
-
       return {
         uri: getMongoConnectionString({
           username: configService.get<string>('database.user'),
