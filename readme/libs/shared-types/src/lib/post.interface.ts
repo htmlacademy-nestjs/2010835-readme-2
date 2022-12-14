@@ -3,8 +3,8 @@ import { PostType } from "./postType.enum";
 
 
 export interface PostInterface{
-  _id: string;
-  originPostId: string;
+  id: number;
+  originPostId: number;
   userId: string;
   originUserId: string;
   postCreationDate: Date;
