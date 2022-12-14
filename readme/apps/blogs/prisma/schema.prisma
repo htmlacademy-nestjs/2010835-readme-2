@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output = "../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,8 +12,8 @@ datasource db {
 }
 
 model Post{
-  id  Int @id @default(autoincrement())
-  originPostId            String
+  id                      Int @id @default(autoincrement())
+  originPostId            Int
   userId                  String
   originUserId            String
   postCreationDate        DateTime @default(now())
@@ -34,10 +35,10 @@ model Post{
 }
 
 model Comment {
-  id          Int @id @default(autoincrement())
-  text        String
-  userId      String
-  date        DateTime @default(now())
-  post        Post @relation(fields: [postId], references: [id])
-  postId      Int
+  id                      Int @id @default(autoincrement())
+  text                    String
+  userId                  String
+  date                    DateTime @default(now())
+  post                    Post @relation(fields: [postId], references: [id])
+  postId                  Int
 }
