@@ -1,6 +1,4 @@
-import { PostState } from "./post-state.enum";
-import { PostType } from "./postType.enum";
-
+import { CommentInterface } from "./comment.interface";
 
 export interface PostInterface{
   id: number;
@@ -9,8 +7,8 @@ export interface PostInterface{
   originUserId: string;
   postCreationDate: Date;
   originPostCreationDate: Date;
-  postType: PostType;
-  postState: PostState;
+  postType: string;
+  postState: string;
   isRepost: boolean;
   likeCount: number;
   likeUsers: string[];
@@ -22,4 +20,5 @@ export interface PostInterface{
   photo?: string;                 //photo
   link?: string;                  //link
   tags?: string[];                //video, photo, text, quote, link
+  comments?: CommentInterface[];
 }

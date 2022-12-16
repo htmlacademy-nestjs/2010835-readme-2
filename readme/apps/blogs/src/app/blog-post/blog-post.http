@@ -1,0 +1,2 @@
+#Get all posts
+GET http://localhost:3333/api/posts HTTP/1.1
