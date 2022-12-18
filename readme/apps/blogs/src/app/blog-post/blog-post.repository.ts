@@ -29,14 +29,41 @@ export class BlogPostRepository implements CRUDRepositoryInterface<BlogPostEntit
       }
     });
   }
-  public create(item: BlogPostEntity): Promise<PostInterface> {
-    throw new Error("Method not implemented.");
+  public async create(item: BlogPostEntity): Promise<PostInterface> {
+    const entityData = item.toObject();
+    return this.prisma.post.create({
+      data: {
+        ...entityData,
+        comments: {
+          connect: []
+        },
+      },
+
+      include: {
+        comments: true,
+      }
+    });
   }
   public update(id: number, item: BlogPostEntity): Promise<PostInterface> {
-    throw new Error("Method not implemented.");
+    const entityData = item.toObject();
+
+    return this.prisma.post.update({
+      where: { id },
+      data: {
+        ...entityData,
+        comments: {
+          connect: []
+        },
+      }
+    })
   }
-  public destroy(id: number): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  public async destroy(id: number): Promise<void> {
+    await this.prisma.post.delete({
+      where: {
+        id,
+      }
+    });
   }
 
 }

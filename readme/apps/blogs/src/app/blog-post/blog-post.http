@@ -1,2 +1,41 @@
 #Get all posts
 GET http://localhost:3333/api/posts HTTP/1.1
+
+###
+
+#Get post by Id
+GET http://localhost:3333/api/posts/14 HTTP/1.1
+
+###
+
+#Create new post
+POST http://localhost:3333/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "384",
+  "originUserId": "",
+  "postType": "quote",
+  "postState": "published",
+  "isRepost": false,
+  "text": "По большей части",
+  "author": "Аристотель",
+  "tags": []
+}
+
+###
+
+#Update post
+PATCH http://localhost:3333/api/posts/14 HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "По большей части будущее подобно прошедшему."
+}
+
+###
+
+#Delete post
+DELETE http://localhost:3333/api/posts/14 HTTP/1.1
+
+###
