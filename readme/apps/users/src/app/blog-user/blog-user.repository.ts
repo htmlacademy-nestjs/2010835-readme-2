@@ -15,7 +15,7 @@ export class BlogUserRepository implements CRUDRepositoryInterface<BlogUserEntit
 
   public async findById(id: string): Promise<UserInterface | null> {
     return this.blogUserModel
-      .findOne({id})
+      .findOne({_id: id})
       .exec();
   }
 

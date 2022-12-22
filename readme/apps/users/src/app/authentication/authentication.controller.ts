@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, HttpCode, HttpStatus, UsePipes } from '@nestjs/common';
 import { fillObject } from '@readme/core';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,6 +7,9 @@ import { CreateUserRdo } from './rdo/create-user.rdo';
 import { LoginUserRdo } from './rdo/login-user.rdo';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { ShowUserRdo } from './rdo/show-user.rdo';
+import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
+import { createUserValidationScheme } from './validation-scheme/create-user.scheme';
+import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 
 @ApiTags('authentication')
 @Controller('authentication')
@@ -22,6 +25,7 @@ export class AuthenticationController {
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.'
   })
+  @UsePipes(new JoiValidationPipe<CreateUserDto>(createUserValidationScheme))
   public async register(@Body() createUserDto: CreateUserDto){
     const createdUser = await this.authenticationService.create(createUserDto);
 
@@ -52,8 +56,9 @@ export class AuthenticationController {
     status: HttpStatus.OK,
     description: 'User found'
   })
-  async show(@Param('id') id: string) {
+  async show(@Param('id', MongoidValidationPipe) id: string) {
     const existUser = await this.authenticationService.getUser(id);
+
     return fillObject(ShowUserRdo, existUser);
   }
 }
