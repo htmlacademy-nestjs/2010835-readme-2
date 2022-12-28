@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, HttpCode, HttpStatus, UsePipes } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, HttpCode, HttpStatus, UsePipes, UseGuards } from '@nestjs/common';
 import { fillObject } from '@readme/core';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,6 +10,7 @@ import { ShowUserRdo } from './rdo/show-user.rdo';
 import { JoiValidationPipe } from '../pipes/joi-validation.pipe';
 import { createUserValidationScheme } from './validation-scheme/create-user.scheme';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
+import { JwtAuthenticationGuard } from './guards/jwt-authentication.guard';
 
 @ApiTags('authentication')
 @Controller('authentication')
@@ -43,12 +44,13 @@ export class AuthenticationController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Password or Login is wrong.',
   })
-  public async verify(@Body() loginUserDto: LoginUserDto){
+  public async login(@Body() loginUserDto: LoginUserDto){
     const verifiedUser = await this.authenticationService.verify(loginUserDto);
 
-    return fillObject(LoginUserRdo, verifiedUser);
+    return this.authenticationService.loginUser(verifiedUser);
   }
 
+  @UseGuards(JwtAuthenticationGuard)
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
