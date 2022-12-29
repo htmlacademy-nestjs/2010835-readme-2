@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UnauthorizedException } from '@nestjs/common/exceptions';
+import { UnauthorizedException, UnprocessableEntityException } from '@nestjs/common/exceptions';
 import { JwtService } from '@nestjs/jwt';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { BlogUserRepository } from '../blog-user/blog-user.repository';
@@ -7,6 +7,7 @@ import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from 
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserInterface } from '@readme/shared-types';
+import { ChangeUserPasswordDto } from './dto/change-user-password.dto';
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class AuthenticationService{
     }
 
     const {name, surname, email, password} = createUserDto;
-    const user = {name, surname, email, passwordHash: '', avatar: '', registerDate: new Date(), postQuantity: 0, subscribersQuantity: 0};
+    const user = {name, surname, email, passwordHash: '', avatar: '', registerDate: new Date(), postQuantity: 0, subscribers: [], subscribersQuantity: 0};
     const userEntity = new BlogUserEntity(user);
     await userEntity.setPassword(password);
 
@@ -53,13 +54,31 @@ export class AuthenticationService{
     const payload = {
       sub: user._id,
       email: user.email,
-      lastname: user.surname,
-      firstname: user.name
+      name: user.name,
+      surname: user.surname
     };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  public async changePassword(email : string, changeUserPasswordDto : ChangeUserPasswordDto) : Promise<void>{
+    const foundUser : UserInterface = await this.repository.findByEmail(email)
+
+    if(!foundUser){
+      throw new UnprocessableEntityException(AUTH_USER_NOT_FOUND);
+    }
+
+    const userEntity = await new BlogUserEntity(foundUser)
+
+    if(!userEntity.comparePassword(changeUserPasswordDto.oldPassword)){
+      throw new UnprocessableEntityException(AUTH_USER_PASSWORD_WRONG);
+    }
+
+    await userEntity.setPassword(changeUserPasswordDto.newPassword);
+
+    await this.repository.update(userEntity._id, userEntity);
   }
 }
 

@@ -40,6 +40,9 @@ export class BlogUserModel extends Document implements UserInterface {
   postQuantity: number;
 
   @Prop()
+  subscribers: string[];
+
+  @Prop()
   subscribersQuantity: number;
 }
 
