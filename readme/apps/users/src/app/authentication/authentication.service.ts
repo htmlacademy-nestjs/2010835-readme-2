@@ -23,7 +23,7 @@ export class AuthenticationService{
     }
 
     const {name, surname, email, password} = createUserDto;
-    const user = {name, surname, email, passwordHash: '', avatar: '', registerDate: new Date(), postQuantity: 0, subscribers: [], subscribersQuantity: 0};
+    const user = {name, surname, email, passwordHash: '', avatar: '', registerDate: new Date(), postQuantity: 0, subscribersQuantity: 0};
     const userEntity = new BlogUserEntity(user);
     await userEntity.setPassword(password);
 
@@ -32,6 +32,7 @@ export class AuthenticationService{
 
   public async verify(loginUserDto: LoginUserDto){
     const existUser = await this.repository.findByEmail(loginUserDto.email);
+    console.log(`existUser ===== ${existUser}`);
 
     if(!existUser){
       throw new UnauthorizedException(AUTH_USER_NOT_FOUND);
@@ -57,6 +58,7 @@ export class AuthenticationService{
       name: user.name,
       surname: user.surname
     };
+    console.log(`payload +++++ ${payload.sub}`);
 
     return {
       access_token: await this.jwtService.signAsync(payload),
@@ -70,7 +72,7 @@ export class AuthenticationService{
       throw new UnprocessableEntityException(AUTH_USER_NOT_FOUND);
     }
 
-    const userEntity = await new BlogUserEntity(foundUser)
+    const userEntity = await new BlogUserEntity(foundUser);
 
     if(!userEntity.comparePassword(changeUserPasswordDto.oldPassword)){
       throw new UnprocessableEntityException(AUTH_USER_PASSWORD_WRONG);

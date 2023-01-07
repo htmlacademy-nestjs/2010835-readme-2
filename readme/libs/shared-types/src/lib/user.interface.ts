@@ -7,6 +7,5 @@ export interface UserInterface{
   avatar: string;
   registerDate: Date;
   postQuantity: number;
-  subscribers: string[];
   subscribersQuantity: number;
 }

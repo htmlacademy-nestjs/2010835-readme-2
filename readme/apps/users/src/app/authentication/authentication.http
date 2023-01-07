@@ -3,17 +3,17 @@ POST http://localhost:3333/api/authentication/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound.com",
+  "email": "johndoe@somemail.com",
   "name": "John",
   "surname": "Doe",
-  "password": "111111"
+  "password": "222222"
 }
 
 ###
 
 # Find user by id
-GET  http://localhost:3333/api/authentication/6390faac69d77ec96406ca15 HTTP/1.1
-Authorization: Bearer
+GET  http://localhost:3333/api/authentication/63b83c3227387df514d4408b HTTP/1.1
+Authorization: Bearer Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2I4M2MzNTI3Mzg3ZGY1MTRkNDQwOGYiLCJlbWFpbCI6ImphbWVzQG5vdGZvdW5kLmNvbSIsIm5hbWUiOiJKYW1lcyIsInN1cm5hbWUiOiJEb2UiLCJpYXQiOjE2NzMwMTg0ODgsImV4cCI6MTY3MzAxODc4OH0.2dvBIqeq4_acI0H45sCjeiQ2w1yMWj_KJxYLsGRDD3U
 ###
 
 # Login
@@ -21,8 +21,8 @@ POST http://localhost:3333/api/authentication/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound.com",
-  "password": "123456"
+  "email": "johndoe@somemail.com",
+  "password": "222222"
 }
 
 ###
@@ -30,9 +30,9 @@ Content-Type: application/json
 # Change password
 POST http://localhost:3333/api/authentication/changepass HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2FkNjAzZTFkZmFlYmNkN2U1ZjZiM2UiLCJlbWFpbCI6InVzZXI0MkBub3Rmb3VuZC5jb20iLCJuYW1lIjoiSmFtZXMiLCJzdXJuYW1lIjoiRG9lIiwiaWF0IjoxNjcyMzIyMzY0LCJleHAiOjE2NzIzMjI0MjR9.PPgBTgTNwaCa6hJyPhLh8ahG74nnryfG0Hf6ZHfe0_s
+Authorization: Bearer
 
 {
-  "oldPassword": "111111",
-  "newPassword": "222222"
+  "oldPassword": "222222",
+  "newPassword": "424242"
 }

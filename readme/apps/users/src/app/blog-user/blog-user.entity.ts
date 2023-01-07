@@ -12,7 +12,6 @@ export class BlogUserEntity implements UserInterface{
   public avatar: string;
   public registerDate: Date;
   public postQuantity: number;
-  public subscribers: string[];
   public subscribersQuantity: number;
 
 
@@ -33,7 +32,6 @@ export class BlogUserEntity implements UserInterface{
     this.avatar = user.avatar;
     this.registerDate = user.registerDate;
     this.postQuantity = user.postQuantity;
-    this.subscribers = [...user.subscribers];
     this.subscribersQuantity = user.subscribersQuantity;
   }
 

@@ -69,6 +69,11 @@ export class AuthenticationController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('changepass')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: ShowUserRdo,
+    status: HttpStatus.OK,
+    description: 'Password changed successfully'
+  })
   @UsePipes(new JoiValidationPipe<ChangeUserPasswordDto>(changeUserPasswordValidationScheme))
   async changePassword(@Request() req, @Body() changeUserPasswordDto: ChangeUserPasswordDto) : Promise<void>{
     await this.authenticationService.changePassword(req.user.email, changeUserPasswordDto);
