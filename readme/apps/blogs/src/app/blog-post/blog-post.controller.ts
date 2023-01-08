@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Patch, Delete, Param, ParseIntPipe, Body } from "@nestjs/common";
+import { Controller, Get, Post, Patch, Delete, Param, ParseIntPipe, Body, Query, UsePipes } from "@nestjs/common";
 import { BlogPostService } from "./blog-post.service";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
+import { PostQuery } from "./query/post.query";
 
 @Controller('posts')
 export class BlogPostController{
@@ -10,8 +11,16 @@ export class BlogPostController{
   ){}
 
   @Get('/')
-  async index() {
-    const posts = await this.blogPostService.getPosts();
+  async index(@Query() query : PostQuery) {
+    const posts = await this.blogPostService.getPosts({
+      limit: +query.limit,
+      page: query.page,
+      userId: query.userId,
+      sortBy: query.sortBy ?? 'creationDate',
+      sortDirection: query.sortDirection ?? 'asc',
+      postType: query.postType,
+      postTag: query.postTag,
+    }as PostQuery);
     return posts;
   }
 
