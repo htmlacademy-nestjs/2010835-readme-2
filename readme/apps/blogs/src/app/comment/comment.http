@@ -1,0 +1,4 @@
+#Get all comments
+GET http://localhost:3333/api/comments/index HTTP/1.1
+
+###

@@ -1,6 +1,5 @@
 
 export interface CreatePostDto{
-  id: number;
   originPostId: number;
   userId: string;
   originUserId: string;

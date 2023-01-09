@@ -18,9 +18,7 @@ export class BlogPostRepository implements CRUDRepositoryInterface<BlogPostEntit
       where: {
         userId: userId,
         postType: postType,
-        tags: {
-          hasSome: [postTag]
-        }
+        tags: postTag ? {hasSome: [postTag]} : undefined,
       },
       take: limit,
       include: {
