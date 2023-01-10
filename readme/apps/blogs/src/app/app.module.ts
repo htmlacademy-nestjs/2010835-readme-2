@@ -4,6 +4,7 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { BlogPostModule } from './blog-post/blog-post.module';
 import { ENV_FILE_PATH } from './app.constants';
 import { jwtConfig } from '../config/jwt.config';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { jwtConfig } from '../config/jwt.config';
       load: [jwtConfig],
     }),
     BlogPostModule,
+    CommentModule,
     PrismaModule,
   ],
   controllers: [],

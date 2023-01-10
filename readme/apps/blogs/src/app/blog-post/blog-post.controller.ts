@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Patch, Delete, Param, ParseIntPipe, Body, Query, UsePipes, UseGuards, Request } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { JoiValidationPipe } from "../pipes/joi-validation.pipe";
 import { BlogPostService } from "./blog-post.service";
 import { CreatePostDto } from "./dto/create-post.dto";
@@ -10,6 +11,7 @@ import { updatePostValidationScheme } from "./validation-scheme/update-post.sche
 
 
 @Controller('posts')
+@ApiTags('BlogPost')
 export class BlogPostController{
   constructor(
     private readonly blogPostService: BlogPostService
