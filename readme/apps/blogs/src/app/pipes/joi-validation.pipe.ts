@@ -6,10 +6,6 @@ export class JoiValidationPipe<T> implements PipeTransform<T>{
   constructor(private schema: ObjectSchema){}
 
   async transform(value: T, { type }: ArgumentMetadata){
-    if (type !== 'body') {
-      throw new Error('This pipe must used only with params!')
-    }
-
     try {
       await this.schema.validateAsync(value);
     } catch (error) {

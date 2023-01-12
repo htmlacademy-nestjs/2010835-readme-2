@@ -1,5 +1,5 @@
 #Get all posts
-GET http://localhost:3334/api/posts/?page=1&limit=3&sortBy=commentCount&sortDirection=asc HTTP/1.1
+GET http://localhost:3334/api/posts/?page=1&sortBy=creationDate HTTP/1.1
 
 ###
 

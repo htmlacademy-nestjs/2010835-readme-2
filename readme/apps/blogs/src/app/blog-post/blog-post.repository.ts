@@ -26,9 +26,9 @@ export class BlogPostRepository implements CRUDRepositoryInterface<BlogPostEntit
       },
       orderBy: [
         {
-          creationDate: sortBy == 'creationDate' ? sortDirection : undefined,
-          likeCount: sortBy == 'likeCount' ? sortDirection : undefined,
-          commentCount: sortBy == 'commentCount' ? sortDirection : undefined
+          creationDate: sortBy === 'creationDate' ? sortDirection : undefined,
+          likeCount: sortBy === 'likeCount' ? sortDirection : undefined,
+          commentCount: sortBy === 'commentCount' ? sortDirection : undefined
         },
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,

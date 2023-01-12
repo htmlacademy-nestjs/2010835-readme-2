@@ -1,23 +1,51 @@
-import { Transform } from "class-transformer";
-
-const DEFAULT_SORT_DIRECTION = 'desc';
-const DEFAULT_SORT_BY_PARAM = 'creationDate';
-const DEFAULT_POST_COUNT_LIMIT = 25;
+import { ApiProperty } from "@nestjs/swagger";
+import { PostType } from "@readme/shared-types";
+import { SortByEnum } from "./sort-by.enum";
+import { SortDirectionEnum } from "./sort-direction.enum";
 
 export class PostQuery {
-  @Transform(value => Number(value) || DEFAULT_POST_COUNT_LIMIT)
-  public limit;
+  @ApiProperty({
+    default: 25,
+    required: false
+  })
+  limit?: number;
 
-  public userId: string;
+  @ApiProperty({
+    default: 463781,
+    required: false
+  })
+  userId?: string;
 
-  public postType?: string;
+  @ApiProperty({
+    enum: PostType,
+    default: PostType.Video,
+    required: false
+  })
+  postType?: PostType;
 
-  public postTag?: string;
+  @ApiProperty({
+    default: '',
+    required: false
+  })
+  postTag?: string;
 
-  public sortBy: 'creationDate' | 'likeCount' | 'commentCount' = DEFAULT_SORT_BY_PARAM;
+  @ApiProperty({
+    enum: SortByEnum,
+    default: SortByEnum.CreationDate,
+    required: false
+  })
+  sortBy: SortByEnum;
 
-  public sortDirection: 'desc' | 'asc' = DEFAULT_SORT_DIRECTION;
+  @ApiProperty({
+    enum: SortDirectionEnum,
+    default: SortDirectionEnum.Desc,
+    required: false
+  })
+  sortDirection?: SortDirectionEnum;
 
-  @Transform(({ value }) => +value)
-  public page: number;
+  @ApiProperty({
+    default: 1,
+    required: false
+  })
+  page?: number;
 }
